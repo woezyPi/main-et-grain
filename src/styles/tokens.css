@@ -1,0 +1,51 @@
+/* ---------------------------------------------------------------------------
+   MAIN & GRAIN — design tokens
+   Derived from the brand board. The neon (--acid) is the single signal colour;
+   cobalt is reserved for drawn line-work, and orange/pink stay out of the Hero.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* --- Surface & ink ----------------------------------------------------- */
+  --paper: #f1ede3;
+  --paper-deep: #e8e2d4;
+  --ink: #111111;
+
+  /* --- Signal ------------------------------------------------------------ */
+  --acid: #b7d900;
+  --acid-deep: #a3c200;
+
+  /* --- Line-work --------------------------------------------------------- */
+  --cobalt: #1646d8;
+
+  /* --- Derived ink steps (kept as rgba so they sit on any surface) -------- */
+  --ink-80: rgba(17, 17, 17, 0.8);
+  --ink-60: rgba(17, 17, 17, 0.58);
+  --ink-40: rgba(17, 17, 17, 0.4);
+  --rule: rgba(17, 17, 17, 0.16);
+  --rule-soft: rgba(17, 17, 17, 0.09);
+
+  /* --- Type -------------------------------------------------------------- */
+  --font-display: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
+    monospace;
+  --font-hand: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+
+  --step-micro: 0.6875rem; /* 11px — technical labels */
+  --step-small: 0.8125rem; /* 13px — CTA, nav */
+
+  /* --- Layout ------------------------------------------------------------ */
+  --gutter: clamp(1.25rem, 4.2vw, 4.5rem);
+  --rail: clamp(0rem, 2.2vw, 2.75rem); /* far-left coordinate rail */
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-reveal: 900ms;
+
+  /* --- Motion inputs, written by useHeroMotion --------------------------- */
+  --px: 0; /* pointer X, -1 .. 1 */
+  --py: 0; /* pointer Y, -1 .. 1 */
+  --scroll: 0; /* hero scroll progress, 0 .. 1 */
+
+  color-scheme: light;
+}
