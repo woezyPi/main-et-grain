@@ -13,13 +13,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--night);
+  color: var(--cream);
   font-family: var(--font-display);
   font-synthesis-weight: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -46,9 +43,27 @@ svg {
   max-width: 100%;
 }
 
-/* A single, consistent focus treatment for the whole brand. */
+/* `hidden` must beat any component that sets `display` on the same element. */
+[hidden] {
+  display: none !important;
+}
+
+/* Reduced motion is honoured globally, not only inside the Hero. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* A single, consistent focus treatment for the whole brand. The neon reads
+   on both the night surface and the paper one; cobalt does not. */
 :focus-visible {
-  outline: 2px solid var(--cobalt);
+  outline: 2px solid var(--acid);
   outline-offset: 4px;
   border-radius: 1px;
 }

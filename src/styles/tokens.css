@@ -1,14 +1,20 @@
 /* ---------------------------------------------------------------------------
    MAIN & GRAIN — design tokens
-   Derived from the brand board. The neon (--acid) is the single signal colour;
-   cobalt is reserved for drawn line-work, and orange/pink stay out of the Hero.
+   Derived from the brand board. The Hero is a night surface: a dark
+   photograph with the type reversed out of it. The neon (--acid) is the
+   single signal colour; cobalt is reserved for drawn line-work on paper and
+   stays out of the Hero.
 --------------------------------------------------------------------------- */
 
 :root {
-  /* --- Surface & ink ----------------------------------------------------- */
+  /* --- Paper surfaces (the rest of the site) ----------------------------- */
   --paper: #f1ede3;
-  --paper-deep: #e8e2d4;
   --ink: #111111;
+
+  /* --- Night surface (the Hero) ------------------------------------------ */
+  --night: #17130e;
+  --night-2: #221c15;
+  --cream: #f2eee4;
 
   /* --- Signal ------------------------------------------------------------ */
   --acid: #b7d900;
@@ -17,12 +23,16 @@
   /* --- Line-work --------------------------------------------------------- */
   --cobalt: #1646d8;
 
-  /* --- Derived ink steps (kept as rgba so they sit on any surface) -------- */
-  --ink-80: rgba(17, 17, 17, 0.8);
-  --ink-60: rgba(17, 17, 17, 0.58);
-  --ink-40: rgba(17, 17, 17, 0.4);
-  --rule: rgba(17, 17, 17, 0.16);
-  --rule-soft: rgba(17, 17, 17, 0.09);
+  /* --- Derived steps -----------------------------------------------------
+     On the night surface cream needs alpha 0.52 to clear 4.5:1 and 0.38 to
+     clear 3:1, so --cream-quiet is the lightest step that may carry text and
+     --cream-edge the lightest that may carry an affordance. --cream-line is
+     decorative hairlines and drawn line-work only. */
+  --cream-80: rgba(242, 238, 228, 0.82);
+  --cream-quiet: rgba(242, 238, 228, 0.62);
+  --cream-edge: rgba(242, 238, 228, 0.42);
+  --cream-line: rgba(242, 238, 228, 0.28);
+  --cream-draw: rgba(242, 238, 228, 0.6);
 
   /* --- Type -------------------------------------------------------------- */
   --font-display: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -30,22 +40,35 @@
     monospace;
   --font-hand: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
 
+  --step-nano: 0.625rem; /* 10px — drawing callouts */
   --step-micro: 0.6875rem; /* 11px — technical labels */
   --step-small: 0.8125rem; /* 13px — CTA, nav */
+  --step-body: clamp(0.8125rem, 0.72rem + 0.4vw, 1rem);
+  --step-display: clamp(3.5rem, 15vw, 6.5rem);
 
   /* --- Layout ------------------------------------------------------------ */
   --gutter: clamp(1.25rem, 4.2vw, 4.5rem);
-  --rail: clamp(0rem, 2.2vw, 2.75rem); /* far-left coordinate rail */
+  --pad-block: clamp(0.875rem, 2.4vh, 1.75rem);
+  --nav-gap: clamp(1.125rem, 2.4vw, 2.375rem);
 
   /* --- Motion ------------------------------------------------------------ */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-reveal: 900ms;
+  --dur-reveal: 720ms;
+  --dur-stagger: 62ms;
+  --dur-hover: 420ms;
 
   /* --- Motion inputs, written by useHeroMotion --------------------------- */
   --px: 0; /* pointer X, -1 .. 1 */
   --py: 0; /* pointer Y, -1 .. 1 */
   --scroll: 0; /* hero scroll progress, 0 .. 1 */
 
-  color-scheme: light;
+  color-scheme: dark light;
+}
+
+/* The headline stops at poster size once there is room for a poster. */
+@media (min-width: 900px) {
+  :root {
+    --step-display: clamp(4.5rem, 11.4vw, 11.25rem);
+  }
 }

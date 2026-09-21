@@ -47,6 +47,21 @@ export const brewSpec: BrewSpec[] = [
   { key: 'Time', value: '02:45' },
 ];
 
+/** Caption for the drawn plate — it is a figure, so it is numbered like one. */
+export const heroFigure = {
+  number: 'Fig. 01',
+  caption: 'V60 pour-over / one cup',
+  /**
+   * Read out in place of the drawing. It states the figures rather than
+   * mentioning that annotations exist, because `role="img"` hides the
+   * drawing's own labels and narrow screens drop them altogether.
+   */
+  alt:
+    'Line drawing of a gooseneck kettle pouring into a V60 cone, ' +
+    '116 mm across and cut at 60 degrees, standing on a 600 ml glass ' +
+    'server. The coffee bed is blooming.',
+};
+
 export const brand = {
   name: 'Main & Grain',
   since: 'Est. 2025',
@@ -54,4 +69,6 @@ export const brand = {
   /** Paris, as printed on the brand board. */
   coordinates: '48.8566° N / 2.3522° E',
   strapline: 'Slow coffee / Better days',
+  /** The lock-up's second line on the brand board. */
+  descriptor: 'Café manuel',
 };
