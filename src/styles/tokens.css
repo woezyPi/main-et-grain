@@ -23,6 +23,11 @@
   /* --- Line-work --------------------------------------------------------- */
   --cobalt: #1646d8;
 
+  /* Board colours that only the paper surface may use. Orange arrives with
+     the first section below the Hero; the board also carries a pink, which
+     nothing needs yet. */
+  --orange: #ff5a00;
+
   /* --- Derived steps -----------------------------------------------------
      On the night surface cream needs alpha 0.52 to clear 4.5:1 and 0.38 to
      clear 3:1, so --cream-quiet is the lightest step that may carry text and
@@ -39,6 +44,18 @@
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
     monospace;
   --font-hand: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+
+  /* --- Tracking, named by the job ----------------------------------------
+     Named by what the type is doing, the way the cream steps are named by
+     what they may carry — not by their value. Tracking has to follow size
+     and case: uppercase mono at 11px needs air to stay countable, Archivo
+     at 180px needs it taken away. Weight follows one rule too: 500 for a
+     label or an affordance that has to hold its own on the photograph, 400
+     for marginalia and body. */
+  --track-label: 0.08em; /* uppercase mono: eyebrow, nav, CTA, sheet, coords */
+  --track-wordmark: 0.005em; /* Archivo at masthead size */
+  --track-display-mid: -0.04em; /* Archivo at poster-link size */
+  --track-display: -0.06em; /* Archivo at headline size */
 
   --step-nano: 0.625rem; /* 10px — drawing callouts */
   --step-micro: 0.6875rem; /* 11px — technical labels */
@@ -58,9 +75,7 @@
   --dur-stagger: 62ms;
   --dur-hover: 420ms;
 
-  /* --- Motion inputs, written by useHeroMotion --------------------------- */
-  --px: 0; /* pointer X, -1 .. 1 */
-  --py: 0; /* pointer Y, -1 .. 1 */
+  /* --- Motion input, written by useHeroMotion ---------------------------- */
   --scroll: 0; /* hero scroll progress, 0 .. 1 */
 
   color-scheme: dark light;

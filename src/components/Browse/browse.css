@@ -1,0 +1,282 @@
+/* ---------------------------------------------------------------------------
+   MAIN & GRAIN — "Tu cherches quoi ?"
+   The page's first paper surface. The Hero above is the night; everything
+   from here down is ink on paper, which is where the board's line-work,
+   its cobalt and its orange belong.
+--------------------------------------------------------------------------- */
+
+.browse {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(2.25rem, 6vh, 4rem) var(--gutter) clamp(2.5rem, 7vh, 4.5rem);
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+/* The Hero's grain, read on paper rather than through it: lighter, and
+   without the mottle, which on a light surface reads as a stain. */
+.browse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  background-repeat: repeat;
+}
+
+.browse__inner {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* The three ways in and the panel share a row only once there is width for
+   both; below that the panel follows them down the page. */
+@media (min-width: 1100px) {
+  .browse__inner {
+    grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  /* A rule, not a gap: the board separates with line-work. */
+  .finder {
+    padding-left: clamp(2rem, 3.5vw, 3.5rem);
+    border-left: 1px solid rgba(17, 17, 17, 0.16);
+  }
+}
+
+.browse__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  margin: 0 0 clamp(1rem, 2.5vh, 1.75rem);
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: clamp(1.125rem, 1.35vw, 1.4375rem);
+  line-height: 1;
+}
+
+.browse__heading-arrow {
+  width: 2.2em;
+  color: rgba(17, 17, 17, 0.45);
+}
+
+.browse__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .browse__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card__frame {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* === One way in ========================================================== */
+
+.card {
+  min-width: 0;
+}
+
+.card__link {
+  display: block;
+  min-width: 0;
+}
+
+/* The photograph, with the tag stuck onto it. No box around the pair — the
+   frame is the picture's own edge and nothing else. */
+.card__frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  /* Wide while the cards are stacked: a full-width 4:3 frame turns a
+     three-item index into a page and a half of scrolling. It squares up
+     once they sit side by side and each one is a third as wide. */
+  aspect-ratio: 16 / 9;
+}
+
+.card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.card__link:hover .card__photo,
+.card__link:focus-visible .card__photo {
+  transform: scale(1.03);
+}
+
+/* Until a photograph exists the frame holds its proportion rather than
+   collapsing the row — the same bargain `HeroVisual` makes above. */
+.card__blank {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(17, 17, 17, 0.05) 0 2px,
+      rgba(17, 17, 17, 0) 2px 9px
+    ),
+    #ddd7c9;
+}
+
+/* Stuck on low and to the left, overhanging the frame's edge the way a
+   label does when it is put on by hand rather than printed in place. */
+.card__tag {
+  position: absolute;
+  left: 0;
+  bottom: clamp(0.75rem, 2.2vw, 1.25rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.34em 0.7em 0.38em;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--tone);
+  color: var(--tone-ink);
+}
+
+.card--acid {
+  --tone: var(--acid);
+  --tone-ink: var(--ink);
+}
+
+.card--cobalt {
+  --tone: var(--cobalt);
+  --tone-ink: var(--paper);
+}
+
+/* Ink, not paper. Paper on this orange measures 2.6:1 — the board sets it
+   in white, and the board is wrong about that one. Ink reaches 6.1:1 and
+   the tag still reads as orange from across the room. */
+.card--orange {
+  --tone: var(--orange);
+  --tone-ink: var(--ink);
+}
+
+.card__arrow {
+  width: 2em;
+  color: currentColor;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.card__link:hover .card__arrow,
+.card__link:focus-visible .card__arrow {
+  transform: translateX(3px);
+}
+
+.card__caption {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: rgba(17, 17, 17, 0.72);
+}
+
+/* === The panel for anyone with no answer ================================= */
+
+.finder {
+  display: grid;
+  justify-items: start;
+  gap: clamp(1rem, 2.5vh, 1.75rem);
+}
+
+.finder__question {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.1vw, 2.75rem);
+  line-height: 1.08;
+  /* Underlined by hand, not by a border: the stroke wanders and does not
+     run the full width of the line. */
+  padding-bottom: 0.28em;
+  background:
+    linear-gradient(90deg, var(--ink) 0 96%, transparent 96%) no-repeat left
+      bottom / 88% 2px;
+}
+
+.finder__question-line {
+  display: block;
+}
+
+.finder__aside {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: clamp(0.9375rem, 1.1vw, 1.125rem);
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.finder__reassurance {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--step-body);
+  line-height: 1.75;
+  color: rgba(17, 17, 17, 0.78);
+}
+
+/* The one filled button on the page. Everything else is a drawn line, so
+   the single solid block of neon is the strongest signal here. */
+.finder__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.7em 1.1em;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--acid);
+  color: var(--ink);
+  transition: background-color var(--dur-hover) var(--ease-out);
+}
+
+.finder__cta:hover,
+.finder__cta:focus-visible {
+  background: var(--acid-deep);
+}
+
+.finder__arrow {
+  width: 2.2em;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.finder__cta:hover .finder__arrow,
+.finder__cta:focus-visible .finder__arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .browse *,
+  .browse *::before,
+  .browse *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
