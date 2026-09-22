@@ -15,7 +15,7 @@ type Props = {
 /**
  * The Hero's masthead — it sits on the photograph rather than above it.
  *
- * Below 900px the four links collapse into a sheet. It is a modal dialog and
+ * Below the masthead breakpoint the four links collapse into a sheet, which
  * behaves like one: the page behind is made inert and unreachable by both
  * pointer and screen reader, Tab cycles inside the sheet, Escape closes it,
  * and focus returns to the button that opened it.
@@ -66,16 +66,18 @@ export function HeroNav({ links, bagCount = 0 }: Props) {
     };
     document.addEventListener('keydown', onKeyDown);
 
-    // The sheet only exists below 900px; widening past it must not leave the
-    // page locked behind a panel that CSS has already hidden.
-    const wide = window.matchMedia('(min-width: 900px)');
-    const onWiden = () => {
-      if (wide.matches) setOpen(false);
-    };
-    wide.addEventListener('change', onWiden);
+    // The sheet exists only for as long as the toggle does, and CSS owns the
+    // width at which that stops being true. Rather than repeating the
+    // breakpoint here — two copies of a number drift apart — watch the button
+    // itself: once a widening viewport takes it away, the page must not stay
+    // locked behind a panel CSS has already hidden.
+    const watchToggle = new ResizeObserver(() => {
+      if (toggle && toggle.offsetParent === null) setOpen(false);
+    });
+    if (toggle) watchToggle.observe(toggle);
 
     return () => {
-      wide.removeEventListener('change', onWiden);
+      watchToggle.disconnect();
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = overflow;
       root?.removeAttribute('inert');

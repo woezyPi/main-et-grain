@@ -29,7 +29,8 @@ export const heroContent = {
   description: 'Coffee worth slowing down for.',
   primaryCta: { label: 'Shop coffee', href: '/coffee' } satisfies CtaLink,
   secondaryCta: { label: 'Build your setup', href: '/setup' } satisfies CtaLink,
-  annotation: 'Pour slowly',
+  /** Written into the corner as three short lines, not one phrase. */
+  annotation: ['better', 'coffee', 'slower'],
 };
 
 export const navLinks: NavLink[] = [
@@ -44,7 +45,7 @@ export const brewSpec: BrewSpec[] = [
   { key: 'Dose', value: '18', unit: 'g' },
   { key: 'Water', value: '300', unit: 'g' },
   { key: 'Temp', value: '92', unit: '°C' },
-  { key: 'Time', value: '02:45' },
+  { key: 'Time', value: '2:45' },
 ];
 
 /** Caption for the drawn plate — it is a figure, so it is numbered like one. */

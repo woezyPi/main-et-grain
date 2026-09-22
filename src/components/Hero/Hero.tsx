@@ -11,7 +11,6 @@ import {
 import { useHeroMotion } from '../../hooks/useHeroMotion';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 import { HeroAnnotation } from './HeroAnnotation';
-import { HeroNav } from './HeroNav';
 import { HeroTechnicalData } from './HeroTechnicalData';
 import { HeroVisual } from './HeroVisual';
 import { Arrow } from './icons';
@@ -23,7 +22,7 @@ export type HeroProps = {
   description?: string;
   primaryCta?: CtaLink;
   secondaryCta?: CtaLink;
-  annotation?: string;
+  annotation?: string[];
   nav?: NavLink[];
   spec?: BrewSpec[];
   /**
@@ -31,6 +30,13 @@ export type HeroProps = {
    * object is drawn instead; see HeroVisual.
    */
   image?: string;
+  /**
+   * Candidate widths for the same photograph. The plate is full-bleed, so a
+   * phone has no business fetching the widest one; `sizes` stays `100vw`
+   * unless the composition stops spanning the viewport.
+   */
+  imageSrcSet?: string;
+  imageSizes?: string;
   imageAlt?: string;
 };
 
@@ -44,6 +50,8 @@ export function Hero({
   nav = defaultNav,
   spec = defaultSpec,
   image,
+  imageSrcSet,
+  imageSizes = '100vw',
   imageAlt = '',
 }: HeroProps) {
   const ref = useRef<HTMLElement>(null);
@@ -62,6 +70,8 @@ export function Hero({
           <img
             className="hero__photo"
             src={image}
+            srcSet={imageSrcSet}
+            sizes={imageSrcSet ? imageSizes : undefined}
             alt={imageAlt}
             // It is the largest thing on the page and the first thing seen.
             fetchPriority="high"
@@ -73,10 +83,11 @@ export function Hero({
         {image ? <div className="hero__scrim" aria-hidden="true" /> : null}
       </div>
 
-      <HeroNav links={nav} />
-
       <div className="hero__body">
-        {/* The board's own index of the shop, set quietly in the margin. */}
+        {/* The whole of the Hero's navigation. There is no masthead above it:
+            the index of the shop is set quietly in the margin and nowhere
+            else, so it has to carry at every width rather than appear once
+            the poster does. */}
         <nav className="rail" aria-label="Sections">
           <ul>
             {nav.map((link) => (
@@ -85,7 +96,6 @@ export function Hero({
               </li>
             ))}
           </ul>
-          <Arrow className="rail__arrow" aria-hidden="true" />
         </nav>
 
         <p className="hero__eyebrow">{eyebrow}</p>
@@ -98,13 +108,12 @@ export function Hero({
           ))}
         </h1>
 
-        <HeroAnnotation tilt={-4}>{annotation}</HeroAnnotation>
+        <HeroAnnotation lines={annotation} tilt={-3} />
 
         <HeroTechnicalData spec={spec} />
 
         <div className="hero__copy">
           <p className="hero__description">{description}</p>
-          <Arrow className="hero__rule" aria-hidden="true" />
         </div>
 
         <div className="hero__actions">
